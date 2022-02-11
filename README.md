@@ -1,2 +1,1 @@
-# front-end
- front-end
+shopping-list: ショッピングリストに追加&削除
