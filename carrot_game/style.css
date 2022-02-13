@@ -1,0 +1,17 @@
+body,
+html {
+  height: 100%;
+}
+.background__image {
+  height: 100%;
+}
+.button__play {
+  position: absolute;
+  top: 20px;
+  left: 700px;
+  width: 100px;
+  height: 100px;
+  background-color: write;
+  color: black;
+  font-size: 50px;
+}
