@@ -9,5 +9,4 @@ document.addEventListener('click',(event)=>{
     // if(top)
     //100=<left=<1200の場合、bug,carrot表示される
     // if(left>= 500 && left <=800){
-    }
 });
