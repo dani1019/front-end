@@ -2,11 +2,24 @@ const bug = document.querySelector('.bug');
 const carrot = document.querySelector('.carrot');
 
 document.addEventListener('click',(event)=>{
-    const top = Math.floor(Math.random()*900);
+    const imgUrl = 'img/carrot.png';
+    let imgs = [];
+    let imgPos = [];
 
-    const left = Math.floor(Math.random()*1300);
-    //500=<top=<800の場合、bug,carrot表示される
-    // if(top)
-    //100=<left=<1200の場合、bug,carrot表示される
-    // if(left>= 500 && left <=800){
+    for (let i = 0; i < 50; i++){
+        // imgs.push(new Image());
+        // imgs[i].scr = imgUrl;
+        // imgs[i].style.position = 'absolute';
+
+        imgPos[i] = [Math.floor(Math.random() * window.innerWidth),
+                    Math.floor(Math.random() * window.innerHeight)];
+        console.log(imgPos[i]);  
+
+        bug.style.left = imgPos[i][0] + 'px';
+        bug.style.top = imgPos[i][1] + 'px';
+        // document.body.appendChild(imgs[i]);
+        // console.log(imgs[i].style.left,imgs[i].style.top);
+    }
+
+
 });
