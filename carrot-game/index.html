@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Game</title>
     <link rel="stylesheet" href="style.css">
-    <script
-    src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
-    data-search-pseudo-elements
-  ></script>
-  <script defer src="main.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 </head>
 <body>
-<canvas class="canvas"></canvas>
-        <button class="button__play">
-            <i class="fas fa-caret-right"></i>
+    <section class="game">
+        <header class="game__header">
+            <button class="game__button">
+                <i class="fas fa-caret-right"></i>
+            </button>
+            <span class="game__timer">0:0</span>
+            <span class="game__score">9</span>
+        </header>
+        <section class="game__field"></section>
+
+    </section>
+    <section class="pop-up">
+        <button class="pop-up__refresh">
+            <i class="fab fa-firefox-browser"></i>
         </button>
-        <div class="time__check">0.5</div>
-        <div class="carrot__number">10</div>
-        <img class="carrot" src="img/carrot.png"></img>
+        <span class="pop-up__message">Hello</span>
+    </section>
 </body>
 </html>
