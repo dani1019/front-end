@@ -30,6 +30,9 @@ body {
   border-radius: 20%;
   cursor: pointer;
 }
+.game__button:hover {
+  transform: scale(1.1);
+}
 .game__time {
   background-color: white;
   border: 5px solid black;
@@ -38,8 +41,9 @@ body {
   height: 50px;
   font-size: 40px;
   text-align: center;
+  visibility: hidden;
 }
-.game__number {
+.game__score {
   border-radius: 90%;
   width: 80px;
   height: 80px;
@@ -49,6 +53,7 @@ body {
   font-size: 70px;
   margin-top: 20px;
   border: 5px solid black;
+  visibility: hidden;
 }
 .game__field {
   position: relative;
