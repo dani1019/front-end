@@ -5,6 +5,8 @@ const gameTimer = document.querySelector('.game__time');
 const gameScore = document.querySelector('.game__score');
 const imgSize = 80;
 const imgCount = 5;
+const GAME_DURATION_SEC = 5;
+let timer = undefined;
 
 let started = false;
 //.game__field'에 img를 추가한다.
@@ -53,6 +55,7 @@ function startGame(){
     initGame();
     showStopBtn();
     showTimerAndScore();
+    startGameTimer();
 }
 
 function stopGame(){
@@ -70,5 +73,20 @@ function showTimerAndScore(){
 
 }
 
-//시작 버튼을 누르면, 정지 버튼으로 바뀌어야 한다.
-//정지 버튼을 누르면, 타임과 숫자가 돌아가야 한다.
+function startGameTimer(){
+    let remainTime = GAME_DURATION_SEC;
+    updateTime(remainTime);
+    timer = setInterval(()=>{
+        if(remainTime == 0){
+            clearInterval(timer);
+            return;
+        }
+        updateTime(--remainTime);
+    },1000);
+};
+
+function updateTime(time){
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    gameTimer.innerHTML = `${minutes}:${seconds}`;
+};
