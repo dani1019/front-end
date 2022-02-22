@@ -72,7 +72,7 @@ body {
   margin: auto;
 }
 .pop__restart {
-  display: none;
+  visibility: hidden;
 }
 .game__restart {
   display: flex;

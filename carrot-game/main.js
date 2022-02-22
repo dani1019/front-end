@@ -3,6 +3,9 @@ const fieldObject = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__time');
 const gameScore = document.querySelector('.game__score');
+const popRestart = document.querySelector('.pop__restart');
+const gameRestart = document.querySelector('.game__restart');
+const gameMessage = document.querySelector('.game__message');
 const imgSize = 80;
 const imgCount = 5;
 const GAME_DURATION_SEC = 5;
@@ -59,6 +62,9 @@ function startGame(){
 }
 
 function stopGame(){
+    stopGameTimer();
+    stopBtnHidden();
+    popUpShow();
 };
 
 function showStopBtn(){
@@ -84,6 +90,19 @@ function startGameTimer(){
         updateTime(--remainTime);
     },1000);
 };
+
+function stopGameTimer(){
+    clearInterval(timer);
+}
+
+function stopBtnHidden(){
+    gameBtn.style.visibility = 'hidden';
+}
+
+function popUpShow(){
+    popRestart.style.visibility = 'visible';
+    gameMessage.innerHTML= 'REPLAY';
+}
 
 function updateTime(time){
     const minutes = Math.floor(time / 60);
