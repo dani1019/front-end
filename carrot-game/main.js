@@ -7,8 +7,9 @@ const popRestart = document.querySelector('.pop__restart');
 const gameRestart = document.querySelector('.game__restart');
 const gameMessage = document.querySelector('.game__message');
 const imgSize = 80;
-const imgCount = 5;
-const GAME_DURATION_SEC = 5;
+const imgCount = 10;
+const GAME_DURATION_SEC = 10;
+let GAME_SCORE = 10;
 let timer = undefined;
 
 let started = false;
@@ -53,12 +54,26 @@ gameBtn.addEventListener('click', () => {
     started = !started;
 });
 
+//당근을 클릭하면, 당근이 없어지고 카운트수가 1일 줄어들게함.
+//0초가 되면 클릭 못하게 함. 개발예정
+function clickImage(){
+   const carrotImgs = document.querySelectorAll('.carrot');
+   carrotImgs .forEach(carrotImg =>{
+        carrotImg.addEventListener('click',()=> {
+            carrotImg.style.visibility='hidden';
+            --GAME_SCORE;
+            gameScore.innerText = GAME_SCORE;
+        });
+   });
+}
+
 function startGame(){
     field.innerHTML= '';
     initGame();
     showStopBtn();
     showTimerAndScore();
     startGameTimer();
+    clickImage();
 }
 
 function stopGame(){
@@ -84,6 +99,7 @@ function startGameTimer(){
     updateTime(remainTime);
     timer = setInterval(()=>{
         if(remainTime == 0){
+            popUpShow();
             clearInterval(timer);
             return;
         }
@@ -109,3 +125,8 @@ function updateTime(time){
     const seconds = time % 60;
     gameTimer.innerHTML = `${minutes}:${seconds}`;
 };
+
+
+
+//리플레이 버튼누르면, 시작 버튼이 다시 생기고, 
+//시간과 당근 수가 초기화 됨.
