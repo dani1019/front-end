@@ -55,7 +55,8 @@ gameBtn.addEventListener('click', () => {
 });
 
 //당근을 클릭하면, 당근이 없어지고 카운트수가 1일 줄어들게함.
-//0초가 되면 클릭 못하게 함. 개발예정
+//startGameTimer remaintime을 취득해서, remaintime==0일 때
+//carrotImgs,bugImgs버튼 못누르도록 하는 방법 찾기
 function clickImage(){
    const carrotImgs = document.querySelectorAll('.carrot');
    const bugImgs = document.querySelectorAll('.bug');
