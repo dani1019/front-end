@@ -58,11 +58,18 @@ gameBtn.addEventListener('click', () => {
 //0초가 되면 클릭 못하게 함. 개발예정
 function clickImage(){
    const carrotImgs = document.querySelectorAll('.carrot');
+   const bugImgs = document.querySelectorAll('.bug');
    carrotImgs .forEach(carrotImg =>{
-        carrotImg.addEventListener('click',()=> {
+        carrotImg.addEventListener('click',e=> {
             carrotImg.style.visibility='hidden';
             --GAME_SCORE;
             gameScore.innerText = GAME_SCORE;
+        });
+   });
+   bugImgs.forEach(bugImg =>{
+        bugImg.addEventListener('click',()=>{
+            clearInterval(timer);
+            popUpShow('FAIL');
         });
    });
 }
@@ -79,7 +86,7 @@ function startGame(){
 function stopGame(){
     stopGameTimer();
     stopBtnHidden();
-    popUpShow();
+    popUpShow('REPLAY');
 };
 
 function showStopBtn(){
@@ -99,7 +106,7 @@ function startGameTimer(){
     updateTime(remainTime);
     timer = setInterval(()=>{
         if(remainTime == 0){
-            popUpShow();
+            popUpShow('REPLAY');
             clearInterval(timer);
             return;
         }
@@ -115,9 +122,9 @@ function stopBtnHidden(){
     gameBtn.style.visibility = 'hidden';
 }
 
-function popUpShow(){
+function popUpShow(text){
     popRestart.style.visibility = 'visible';
-    gameMessage.innerHTML= 'REPLAY';
+    gameMessage.innerHTML= text;
 }
 
 function updateTime(time){
