@@ -7,18 +7,19 @@ const popRestart = document.querySelector('.pop__restart');
 const gameRestart = document.querySelector('.game__restart');
 const gameMessage = document.querySelector('.game__message');
 const imgSize = 80;
-const imgCount = 10;
+const CARROT_COUNT = 10;
 const GAME_DURATION_SEC = 10;
 let GAME_SCORE = 10;
 let timer = undefined;
+let score = 0;
 
 let started = false;
 //.game__field'에 img를 추가한다.
 //game__field의 범위에서..
 
 function initGame(){
-    addItem('carrot',imgCount,'img/carrot.png');
-    addItem('bug',imgCount,'img/bug.png');
+    addItem('carrot',CARROT_COUNT,'img/carrot.png');
+    addItem('bug',CARROT_COUNT,'img/bug.png');
 }
 
 function addItem(classPath,count,imgPath){
@@ -41,6 +42,8 @@ function addItem(classPath,count,imgPath){
    }
 };
 
+field.addEventListener('click',(event) => onfieldClick(event));
+
 function randomSpot(min, max){
     return Math.random()*(max-min) + min;
 };
@@ -54,40 +57,47 @@ gameBtn.addEventListener('click', () => {
     started = !started;
 });
 
-//당근을 클릭하면, 당근이 없어지고 카운트수가 1일 줄어들게함.
-//startGameTimer remaintime을 취득해서, remaintime==0일 때
-//carrotImgs,bugImgs버튼 못누르도록 하는 방법 찾기
-function clickImage(){
-   const carrotImgs = document.querySelectorAll('.carrot');
-   const bugImgs = document.querySelectorAll('.bug');
-   carrotImgs .forEach(carrotImg =>{
-        carrotImg.addEventListener('click',e=> {
-            carrotImg.style.visibility='hidden';
-            --GAME_SCORE;
-            gameScore.innerText = GAME_SCORE;
-        });
-   });
-   bugImgs.forEach(bugImg =>{
-        bugImg.addEventListener('click',()=>{
-            clearInterval(timer);
-            popUpShow('FAIL');
-        });
-   });
-}
-
 function startGame(){
     field.innerHTML= '';
     initGame();
     showStopBtn();
     showTimerAndScore();
     startGameTimer();
-    clickImage();
 }
+
+function onfieldClick(event){
+    if(!started){
+        return;
+    }
+    const target = event.target;
+    if(target.matches('.carrot')){
+        target.remove();
+        score++;
+        updataScoreBoard();
+        if(CARROT_COUNT === score){
+            finishGame(true);
+        }
+    }else if(target.matches('.bug')){
+        stopGameTimer();
+        finishGame(false);  
+    }
+}
+
+function updataScoreBoard(){
+    gameScore.innerText = CARROT_COUNT - score;
+}
+
+function finishGame(win){
+    started = false;
+    stopBtnHidden();
+    popUpShow(win ? 'YOU WIN' : 'YOU LOST');
+}
+
 
 function stopGame(){
     stopGameTimer();
     stopBtnHidden();
-    popUpShow('REPLAY');
+    popUpShow('RESTART');
 };
 
 function showStopBtn(){
@@ -99,7 +109,6 @@ function showStopBtn(){
 function showTimerAndScore(){
     gameTimer.style.visibility = 'visible';
     gameScore.style.visibility = 'visible';
-
 }
 
 function startGameTimer(){
@@ -107,8 +116,8 @@ function startGameTimer(){
     updateTime(remainTime);
     timer = setInterval(()=>{
         if(remainTime == 0){
-            popUpShow('REPLAY');
             clearInterval(timer);
+            finishGame(CARROT_COUNT==score);
             return;
         }
         updateTime(--remainTime);
@@ -125,7 +134,8 @@ function stopBtnHidden(){
 
 function popUpShow(text){
     popRestart.style.visibility = 'visible';
-    gameMessage.innerHTML= text;
+    gameMessage.innerText = text;
+
 }
 
 function updateTime(time){
@@ -133,8 +143,3 @@ function updateTime(time){
     const seconds = time % 60;
     gameTimer.innerHTML = `${minutes}:${seconds}`;
 };
-
-
-
-//리플레이 버튼누르면, 시작 버튼이 다시 생기고, 
-//시간과 당근 수가 초기화 됨.
