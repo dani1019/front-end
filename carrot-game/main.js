@@ -54,10 +54,10 @@ gameBtn.addEventListener('click', () => {
     }else{
         startGame();
     }
-    started = !started;
 });
 
 function startGame(){
+    started = true;
     field.innerHTML= '';
     initGame();
     showStopBtn();
@@ -66,7 +66,7 @@ function startGame(){
 }
 
 function onfieldClick(event){
-    if(!started){
+    if(started){
         return;
     }
     const target = event.target;
@@ -95,13 +95,14 @@ function finishGame(win){
 
 
 function stopGame(){
+    started = false;
     stopGameTimer();
     stopBtnHidden();
     popUpShow('RESTART');
 };
 
 function showStopBtn(){
-    const icon = document.querySelector('.fa-caret-right');
+    const icon = document.querySelector('.fas');
     icon.classList.remove('fa-caret-right');
     icon.classList.add('fa-stop');
 
@@ -135,7 +136,22 @@ function stopBtnHidden(){
 function popUpShow(text){
     popRestart.style.visibility = 'visible';
     gameMessage.innerText = text;
+}
 
+popRestart.addEventListener('click',() =>{
+    hidepopRestart();
+});
+
+function hidepopRestart(){
+    popRestart.style.visibility='hidden';
+    gameTimer.style.visibility = 'hidden';
+    gameScore.style.visibility = 'hidden';
+    gameBtn.style.visibility='visible';
+    const icon = document.querySelector('.fas');
+    icon.classList.remove('fa-stop');
+    icon.classList.add('fa-caret-right');
+    field.innerHTML= '';
+    started = false;
 }
 
 function updateTime(time){
