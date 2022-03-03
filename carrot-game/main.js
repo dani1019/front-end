@@ -42,12 +42,15 @@ function addItem(classPath,count,imgPath){
    }
 };
 
+//게임 시작 전 당근, 벌레를 클릭하면, 눌리지 않게 해야함.
 field.addEventListener('click',(event) => onfieldClick(event));
 
 function randomSpot(min, max){
     return Math.random()*(max-min) + min;
 };
 
+//게임시작 버튼 누르고, startGame()가 호출이 되고전에도, onfieldClick는 클릭가능.
+// 
 gameBtn.addEventListener('click', () => {
     if(started){
         stopGame();
@@ -65,8 +68,9 @@ function startGame(){
     startGameTimer();
 }
 
+//게임 시작 전 당근, 벌레를 클릭하면, 눌리지 않게 해야함.
 function onfieldClick(event){
-    if(started){
+    if(!started){
         return;
     }
     const target = event.target;
@@ -112,9 +116,11 @@ function showTimerAndScore(){
     gameScore.style.visibility = 'visible';
 }
 
+//게임재시작하고 나서, 당근수, 시간 초기화하는 방법?
+//지금 게임 재시작하면, 당근수 0,시간 0되서 자동으로 You Win나옴
 function startGameTimer(){
     let remainTime = GAME_DURATION_SEC;
-    updateTime(remainTime);
+    let score = CARROT_COUNT;
     timer = setInterval(()=>{
         if(remainTime == 0){
             clearInterval(timer);
@@ -142,6 +148,7 @@ popRestart.addEventListener('click',() =>{
     hidepopRestart();
 });
 
+//맨처음 화면으로 돌아가야 한다.
 function hidepopRestart(){
     popRestart.style.visibility='hidden';
     gameTimer.style.visibility = 'hidden';
@@ -152,6 +159,7 @@ function hidepopRestart(){
     icon.classList.add('fa-caret-right');
     field.innerHTML= '';
     started = false;
+    
 }
 
 function updateTime(time){
